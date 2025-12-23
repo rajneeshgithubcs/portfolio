@@ -2,13 +2,13 @@ import { useEffect } from "react";
 
 const ResumePage = () => {
   useEffect(() => {
-    // This triggers the browser's native PDF viewer
-    window.location.replace("../public/newone.pdf");
+    // FIX: Change "../public/newone.pdf" to "/newone.pdf"
+    // In production, files from 'public' are at the root level.
+    window.location.replace("/newone.pdf");
   }, []);
 
   return (
     <div className="min-h-screen bg-[#020306] flex flex-col items-center justify-center font-mono">
-      {/* HUD Loading Spinner */}
       <div className="relative w-20 h-20 mb-8">
         <div className="absolute inset-0 border-2 border-cyan-500/20 rounded-full"></div>
         <div className="absolute inset-0 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
