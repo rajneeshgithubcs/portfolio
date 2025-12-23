@@ -15,7 +15,7 @@ import {
 import { MdApi, MdSecurity } from "react-icons/md";
 import { GiAbstract053 } from "react-icons/gi";
 
-// ---------------- PROJECT DATA ----------------
+// ---------------- PROJECT DATA (DO NOT REMOVE THIS) ----------------
 const PROJECTS = {
   "salesman-management-system": {
     title: "Salesman Management System",
@@ -100,7 +100,7 @@ export default function ProjectDetails() {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-[#010204] text-cyan-500 flex items-center justify-center font-mono uppercase tracking-[0.5em]">
+      <div className="min-h-screen bg-[#010204] text-cyan-500 flex items-center justify-center font-mono uppercase tracking-[0.5em] px-6 text-center">
         <motion.p
           animate={{ opacity: [0.2, 1, 0.2] }}
           transition={{ repeat: Infinity, duration: 2 }}
@@ -112,38 +112,37 @@ export default function ProjectDetails() {
   }
 
   return (
-    <section className="bg-[#010204] text-white min-h-screen py-32 font-mono relative overflow-hidden">
-      {/* BACKGROUND GRID DECOR */}
+    <section className="bg-[#010204] text-white min-h-screen py-20 md:py-32 font-mono relative overflow-hidden">
+      {/* BACKGROUND DECOR */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(#06b6d4 1px, transparent 1px), linear-gradient(90deg, #06b6d4 1px, transparent 1px)`,
-          backgroundSize: "50px 50px",
+          backgroundSize: "40px 40px",
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-8 relative z-10">
-        {/* TOP NAVIGATION / STATUS */}
-        <div className="mb-20 flex justify-between items-center border-b border-white/5 pb-6">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
+        {/* NAV */}
+        <div className="mb-12 flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-white/5 pb-6 gap-4">
           <Link
             to="/projects"
-            className="text-[10px] text-cyan-500/50 hover:text-cyan-400 tracking-[0.4em] uppercase transition-all"
+            className="text-[10px] text-cyan-500/50 hover:text-cyan-400 tracking-[0.4em] uppercase transition-all flex items-center gap-2"
           >
-            [ BACK_TO_REPOSITORY ]
+            <span>←</span> [ BACK_TO_REPOSITORY ]
           </Link>
-          <span className="text-[10px] text-white/20 tracking-[0.4em] uppercase">
+          <span className="text-[9px] text-white/20 tracking-[0.4em] uppercase">
             {project.id} // STABLE_STAGED
           </span>
         </div>
 
-        {/* DIAGNOSTIC HEADER */}
+        {/* HEADER */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           className="max-w-4xl"
         >
-          <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[1]">
             {project.title.split(" ").map((word, i) => (
               <span
                 key={i}
@@ -153,64 +152,57 @@ export default function ProjectDetails() {
               </span>
             ))}
           </h1>
-          <p className="mt-10 text-slate-400 text-lg md:text-xl leading-relaxed font-light border-l-2 border-cyan-500/30 pl-8 max-w-2xl">
+          <p className="mt-6 text-slate-400 text-base md:text-xl leading-relaxed border-l-2 border-cyan-500/30 pl-5 max-w-2xl">
             {project.description}
           </p>
         </motion.div>
 
-        {/* DATA MODULES GRID */}
-        <div className="mt-32 grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* HARDWARE/SOFTWARE STACK (Span 5) */}
-          <div className="lg:col-span-5">
-            <h2 className="text-xs font-black tracking-[0.5em] text-white/30 uppercase mb-10 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-cyan-500/30"></span> Core_Stack
+        {/* CONTENT GRID */}
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
+          {/* STACK */}
+          <div className="lg:col-span-5 order-2 lg:order-1">
+            <h2 className="text-[10px] font-black tracking-[0.4em] text-white/30 uppercase mb-6 flex items-center gap-4">
+              <span className="w-6 h-[1px] bg-cyan-500/30"></span> Core_Stack
             </h2>
-            <div className="grid grid-cols-2 gap-4">
-              {project.stack.map((tool, idx) => {
-                const Icon = tool.icon;
-                return (
-                  <motion.div
-                    key={idx}
-                    whileHover={{ backgroundColor: "rgba(6, 182, 212, 0.05)" }}
-                    className="group border border-white/5 bg-white/[0.02] p-6 flex flex-col items-start transition-all"
-                  >
-                    <Icon
-                      className={`text-3xl mb-4 ${tool.color} opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all`}
-                    />
-                    <span className="text-[11px] font-bold tracking-widest text-white/50 group-hover:text-white uppercase">
-                      {tool.name}
-                    </span>
-                  </motion.div>
-                );
-              })}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3">
+              {project.stack.map((tool, idx) => (
+                <motion.div
+                  key={idx}
+                  className="border border-white/5 bg-white/[0.02] p-4 flex flex-col items-start transition-all"
+                >
+                  <tool.icon
+                    className={`text-2xl mb-3 ${tool.color} opacity-80`}
+                  />
+                  <span className="text-[9px] font-bold tracking-widest text-white/50 uppercase truncate w-full">
+                    {tool.name}
+                  </span>
+                </motion.div>
+              ))}
             </div>
           </div>
 
-          {/* FUNCTIONAL LOGIC / FEATURES (Span 7) */}
-          <div className="lg:col-span-7 bg-white/[0.01] border border-white/5 p-10 relative">
-            <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-cyan-500/40" />
-
-            <h2 className="text-xs font-black tracking-[0.5em] text-white/30 uppercase mb-10 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-cyan-500/30"></span>{" "}
+          {/* FEATURES */}
+          <div className="lg:col-span-7 bg-white/[0.01] border border-white/5 p-6 md:p-10 relative order-1 lg:order-2">
+            <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-cyan-500/40" />
+            <h2 className="text-[10px] font-black tracking-[0.4em] text-white/30 uppercase mb-6 flex items-center gap-4">
+              <span className="w-6 h-[1px] bg-cyan-500/30"></span>{" "}
               Functional_Logic
             </h2>
-
-            <ul className="space-y-6">
+            <ul className="space-y-4">
               {project.features.map((f, i) => (
-                <li key={i} className="flex items-start gap-4 group">
-                  <span className="text-cyan-500 text-xs font-black mt-1 group-hover:translate-x-1 transition-transform">
+                <li key={i} className="flex items-start gap-3 group">
+                  <span className="text-cyan-500 text-xs font-black mt-1">
                     »
                   </span>
-                  <p className="text-slate-300 text-sm md:text-base font-light tracking-wide uppercase group-hover:text-white transition-colors">
+                  <p className="text-slate-300 text-xs md:text-base font-light tracking-wide uppercase group-hover:text-white transition-colors">
                     {f}
                   </p>
                 </li>
               ))}
             </ul>
-
-            {/* DECORATIVE STATUS BAR */}
-            <div className="mt-16 flex items-center gap-2 opacity-20">
-              <div className="h-1 flex-1 bg-white/10 overflow-hidden">
+            {/* STATUS BAR */}
+            <div className="mt-10 flex items-center gap-3 opacity-20">
+              <div className="h-[2px] flex-1 bg-white/10 overflow-hidden">
                 <motion.div
                   initial={{ x: "-100%" }}
                   animate={{ x: "100%" }}
@@ -218,7 +210,7 @@ export default function ProjectDetails() {
                   className="w-1/3 h-full bg-cyan-500"
                 />
               </div>
-              <span className="text-[8px] tracking-widest uppercase">
+              <span className="text-[7px] tracking-widest uppercase">
                 System_Verified
               </span>
             </div>

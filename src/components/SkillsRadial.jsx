@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FaReact, FaAws, FaNodeJs, FaJava } from "react-icons/fa";
 import {
   SiTailwindcss,
@@ -9,162 +9,62 @@ import {
 } from "react-icons/si";
 
 const skills = [
-  {
-    icon: FaReact,
-    label: "React",
-    angle: 0,
-    category: "UI_KERNEL",
-    color: "#61DAFB",
-  },
-  {
-    icon: SiSpringboot,
-    label: "Spring",
-    angle: 45,
-    category: "BACKEND",
-    color: "#6DB33F",
-  },
-  {
-    icon: FaNodeJs,
-    label: "Node.js",
-    angle: 90,
-    category: "RUNTIME",
-    color: "#339933",
-  },
-  {
-    icon: FaJava,
-    label: "Java",
-    angle: 135,
-    category: "CORE",
-    color: "#007396",
-  },
-  {
-    icon: SiMongodb,
-    label: "MongoDB",
-    angle: 180,
-    category: "STORAGE",
-    color: "#47A248",
-  },
-  {
-    icon: FaAws,
-    label: "AWS",
-    angle: 225,
-    category: "INFRA",
-    color: "#FF9900",
-  },
-  {
-    icon: SiTailwindcss,
-    label: "Tailwind",
-    angle: 270,
-    category: "STYLE",
-    color: "#06B6D4",
-  },
-  {
-    icon: SiFramer,
-    label: "Framer",
-    angle: 315,
-    category: "MOTION",
-    color: "#CC33FF",
-  },
+  { icon: FaReact, label: "React", angle: 0, category: "UI_KERNEL" },
+  { icon: SiSpringboot, label: "Spring", angle: 45, category: "BACKEND" },
+  { icon: FaNodeJs, label: "Node.js", angle: 90, category: "RUNTIME" },
+  { icon: FaJava, label: "Java", angle: 135, category: "CORE" },
+  { icon: SiMongodb, label: "MongoDB", angle: 180, category: "STORAGE" },
+  { icon: FaAws, label: "AWS", angle: 225, category: "INFRA" },
+  { icon: SiTailwindcss, label: "Tailwind", angle: 270, category: "STYLE" },
+  { icon: SiFramer, label: "Framer", angle: 315, category: "MOTION" },
 ];
-
-const RADIUS = 200;
 
 export default function SkillsRadial() {
   const [hoveredSkill, setHoveredSkill] = useState(null);
-  const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Radius logic: smaller for mobile to prevent overflow
+  const radius = isMobile ? 120 : 220;
 
   return (
-    <section className="relative bg-[#020306] py-64 flex items-center justify-center overflow-hidden font-mono cursor-crosshair">
-      {/* 1. MECHANICAL DEPTH: ETCHED FLOOR */}
-      <div
-        className="absolute inset-0 opacity-[0.15]"
-        style={{
-          backgroundImage: `radial-gradient(circle at center, #1e293b 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020306_70%)]" />
-
-      <div
-        ref={containerRef}
-        className="relative w-[600px] h-[600px] flex items-center justify-center"
-      >
-        {/* 2. ATMOSPHERIC LIGHTING */}
-        <AnimatePresence>
-          {hoveredSkill && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 rounded-full blur-[120px] transition-colors duration-500"
-              style={{
-                background: `radial-gradient(circle, ${hoveredSkill.color}20 0%, transparent 70%)`,
-              }}
-            />
-          )}
-        </AnimatePresence>
-
-        {/* 3. PHYSICAL RINGS (Static mechanical parts) */}
-        <div className="absolute w-[400px] h-[400px] border border-white/[0.03] rounded-full shadow-[inset_0_0_20px_rgba(255,255,255,0.02)]" />
-        <div className="absolute w-[402px] h-[402px] border-t border-cyan-500/20 rounded-full animate-spin [animation-duration:10s]" />
-
-        {/* 4. ENERGY FILAMENTS (Laser lines to center) */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none">
-          {skills.map((skill, i) => {
-            const rad = (skill.angle * Math.PI) / 180;
-            const x2 = 300 + Math.cos(rad) * RADIUS;
-            const y2 = 300 + Math.sin(rad) * RADIUS;
-            const isActive = hoveredSkill?.label === skill.label;
-
-            return (
-              <motion.line
-                key={i}
-                x1="300"
-                y1="300"
-                x2={x2}
-                y2={y2}
-                stroke={isActive ? skill.color : "white"}
-                strokeWidth={isActive ? "1" : "0.2"}
-                strokeOpacity={isActive ? "0.6" : "0.1"}
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.5 }}
-              />
-            );
-          })}
-        </svg>
-
-        {/* 5. CORE UNIT (Processer) */}
-        <div className="relative z-20 group">
-          <div className="w-32 h-32 rounded-full bg-black border border-white/10 flex flex-col items-center justify-center backdrop-blur-3xl shadow-2xl relative">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/[0.05] to-transparent" />
-
-            {/* Inner pulsating core */}
-            <motion.div
-              animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="absolute w-16 h-16 bg-cyan-500/10 blur-xl rounded-full"
-            />
-
-            <span className="text-[7px] tracking-[0.4em] text-white/30 uppercase mb-1">
-              Nexus_V5
-            </span>
-            <h3 className="text-[10px] font-black text-white tracking-widest uppercase">
-              Kernel
-            </h3>
-          </div>
+    <section className="relative bg-[#020306] py-20 flex items-center justify-center min-h-screen overflow-hidden font-mono">
+      {/* 1. FIXED CIRCULAR CORE */}
+      <div className="absolute z-50">
+        <div className="w-24 h-24 md:w-40 md:h-40 rounded-full bg-black border border-white/10 flex flex-col items-center justify-center relative shadow-[0_0_50px_rgba(6,182,212,0.1)]">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 rounded-full border-t-2 border-cyan-500/20"
+          />
+          <span className="text-[8px] text-cyan-500 font-bold tracking-widest uppercase">
+            Stable
+          </span>
+          <h3 className="text-[10px] md:text-xs font-black text-white uppercase">
+            Nexus_V5
+          </h3>
         </div>
+      </div>
 
-        {/* 6. ROTATING MODULES */}
+      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center">
+        {/* 2. ROTATING ORBIT */}
         <motion.div
-          className="absolute inset-0 z-10"
           animate={{ rotate: 360 }}
-          transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-0 z-20"
         >
           {skills.map((skill, i) => {
             const rad = (skill.angle * Math.PI) / 180;
-            const x = Math.cos(rad) * RADIUS;
-            const y = Math.sin(rad) * RADIUS;
+            const x = Math.cos(rad) * radius;
+            const y = Math.sin(rad) * radius;
             const Icon = skill.icon;
             const isActive = hoveredSkill?.label === skill.label;
 
@@ -176,41 +76,50 @@ export default function SkillsRadial() {
                   transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
                 }}
               >
+                {/* 3. COUNTER-ROTATION (This prevents the "left side" tilt issue) */}
                 <motion.div
                   animate={{ rotate: -360 }}
                   transition={{
-                    duration: 80,
+                    duration: 60,
                     repeat: Infinity,
                     ease: "linear",
                   }}
                   onMouseEnter={() => setHoveredSkill(skill)}
                   onMouseLeave={() => setHoveredSkill(null)}
-                  className="relative cursor-pointer group"
+                  className="relative flex flex-col items-center justify-center"
                 >
-                  {/* Glass Module Frame */}
-                  <motion.div
-                    animate={
-                      isActive ? { boxShadow: `0 0 30px ${skill.color}40` } : {}
-                    }
-                    className={`w-12 h-12 rounded-lg border ${isActive ? "border-white/50" : "border-white/10"} bg-[#0a0a0c] flex items-center justify-center transition-all duration-300 relative overflow-hidden`}
+                  <div
+                    className={`w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full transition-all duration-300
+                    ${isActive ? "bg-white text-black scale-110 shadow-xl" : "bg-[#0a0c10] border border-white/10 text-white/30"}`}
                   >
-                    <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
-                    <Icon
-                      className={`text-xl transition-all duration-500 ${isActive ? "scale-110" : "opacity-40 grayscale group-hover:grayscale-0"}`}
-                      style={{ color: isActive ? skill.color : "white" }}
-                    />
-                  </motion.div>
+                    <Icon className="text-xl md:text-2xl" />
+                  </div>
 
-                  {/* Mechanical Tag */}
+                  {/* 4. RESPONSIVE HUD TAG */}
                   <AnimatePresence>
                     {isActive && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 25 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white text-black text-[9px] font-black px-2 py-0.5 whitespace-nowrap uppercase italic"
+                        initial={{
+                          opacity: 0,
+                          y: isMobile ? 10 : 0,
+                          x: isMobile ? 0 : -80,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          y: isMobile ? 50 : 0,
+                          x: isMobile ? 0 : -110,
+                        }}
+                        exit={{ opacity: 0 }}
+                        className="absolute z-[100] pointer-events-none"
                       >
-                        {skill.label}
+                        <div className="bg-black border-r-2 border-cyan-500 p-2 min-w-[120px] shadow-2xl backdrop-blur-md text-center md:text-left">
+                          <p className="text-[7px] text-cyan-500 font-bold uppercase tracking-tighter">
+                            {skill.category}
+                          </p>
+                          <p className="text-[10px] md:text-sm font-black text-white uppercase italic">
+                            {skill.label}
+                          </p>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

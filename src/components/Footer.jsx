@@ -1,17 +1,10 @@
 import { motion } from "framer-motion";
-import {
-  FaGithub,
-  FaLinkedinIn,
-  FaTwitter,
-  FaTerminal,
-  FaArrowUp,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedinIn, FaTerminal, FaArrowUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 const Footer = () => {
   const [time, setTime] = useState("");
 
-  // Real-time System Clock with hydration fix
   useEffect(() => {
     setTime(new Date().toLocaleTimeString());
     const timer = setInterval(() => {
@@ -31,9 +24,23 @@ const Footer = () => {
     { name: "Experience", href: "#" },
   ];
 
+  // UPDATED SOCIAL DATA WITH YOUR LINKS
+  const socialLinks = [
+    {
+      icon: <FaGithub />,
+      link: "https://github.com/rajneeshgithubcs",
+      label: "GITHUB",
+    },
+    {
+      icon: <FaLinkedinIn />,
+      link: "https://linkedin.com/in/rajneesh-rajak-209882231",
+      label: "LINKEDIN",
+    },
+  ];
+
   return (
     <footer className="relative bg-[#020306] text-white font-mono border-t border-white/5 overflow-hidden">
-      {/* 1. CRT SCANLINE OVERLAY */}
+      {/* CRT SCANLINE OVERLAY */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_2px,3px_100%]" />
 
       <div className="max-w-7xl mx-auto px-8 py-20 relative z-10">
@@ -47,7 +54,7 @@ const Footer = () => {
             <div>
               <h3 className="text-xl font-black italic tracking-tighter uppercase">
                 RAJAK.
-                <span className="text-cyan-500 text-sm font-bold">
+                <span className="text-cyan-500 text-sm font-bold ml-1">
                   ARCHITECT
                 </span>
               </h3>
@@ -79,7 +86,6 @@ const Footer = () => {
 
         {/* MAIN FOOTER CONTENT */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          {/* SYSTEM BRIEF */}
           <div className="md:col-span-2 space-y-6">
             <div className="flex items-center gap-2 text-cyan-500">
               <FaTerminal className="text-xs" />
@@ -93,7 +99,6 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* NAV PROTOCOLS */}
           <div className="space-y-6">
             <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">
               Navigation
@@ -115,27 +120,28 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* SOCIAL TERMINALS */}
+          {/* SOCIAL TERMINALS - TWITTER REMOVED */}
           <div className="space-y-6">
             <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">
-              Uplink
+              Uplink_Protocols
             </h4>
-            <div className="flex gap-3">
-              {[
-                { icon: <FaGithub />, link: "#" },
-                { icon: <FaLinkedinIn />, link: "#" },
-                { icon: <FaTwitter />, link: "#" },
-              ].map((soc, i) => (
+            <div className="flex gap-4">
+              {socialLinks.map((soc, i) => (
                 <motion.a
                   key={i}
                   href={soc.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{
-                    y: -3,
-                    backgroundColor: "rgba(6, 182, 212, 0.1)",
+                    y: -5,
+                    boxShadow: "0 0 20px rgba(6, 182, 212, 0.2)",
                   }}
-                  className="w-10 h-10 border border-white/10 flex items-center justify-center text-white/30 hover:text-cyan-400 hover:border-cyan-400 transition-all"
+                  className="w-12 h-12 border border-white/10 flex items-center justify-center text-white/30 hover:text-cyan-400 hover:border-cyan-400 transition-all bg-white/5 relative group"
                 >
-                  {soc.icon}
+                  <span className="absolute -top-6 text-[8px] font-bold text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {soc.label}
+                  </span>
+                  <div className="text-xl">{soc.icon}</div>
                 </motion.a>
               ))}
             </div>
