@@ -1,10 +1,16 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ResumePage = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    // FIX: Change "../public/newone.pdf" to "/newone.pdf"
-    // In production, files from 'public' are at the root level.
-    window.location.replace("/newone.pdf");
+    const timer = setTimeout(() => {
+      // .replace() removes this loading page from the history stack
+      window.location.replace("/newone.pdf");
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -19,8 +25,16 @@ const ResumePage = () => {
           Establishing_Data_Link
         </p>
         <p className="text-white/30 text-[10px] uppercase">
-          Fetching: RAJAK_RESUME_v5.pdf
+          Redirecting to: RAJAK_RESUME_v5.pdf
         </p>
+
+        {/* Manual Go Back Button as extra safety */}
+        <button
+          onClick={() => navigate("/")}
+          className="block mt-4 text-white/20 hover:text-white text-[8px] uppercase tracking-widest transition-colors"
+        >
+          [ ABORT_AND_RETURN_HOME ]
+        </button>
       </div>
     </div>
   );
