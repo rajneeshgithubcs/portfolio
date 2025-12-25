@@ -59,7 +59,7 @@ export default function Projects() {
           className="mb-32 border-l-2 border-cyan-500/50 pl-8"
         >
           <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase">
-            System_<span className="text-cyan-400">Repository</span>
+            Project_<span className="text-cyan-400">Repository</span>
           </h2>
           <p className="mt-4 text-slate-500 text-xs tracking-[0.3em] uppercase leading-relaxed">
             // Accessing_Encrypted_Archives... <br />
@@ -116,7 +116,7 @@ export default function Projects() {
                 to={`/projects/${p.slug}`}
                 className="inline-flex items-center gap-4 mt-10 text-[10px] font-black text-white/40 group-hover:text-cyan-400 tracking-[0.4em] uppercase transition-all"
               >
-                <span>Initialize_Uplink</span>
+                <span>VIEW DETAILS</span>
                 <span className="w-8 h-[1px] bg-white/10 group-hover:bg-cyan-400 group-hover:w-12 transition-all" />
               </Link>
             </motion.article>

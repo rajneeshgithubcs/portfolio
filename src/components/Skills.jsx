@@ -139,7 +139,7 @@ export default function AdvancedSkills() {
                 className="text-transparent"
                 style={{ WebkitTextStroke: "1px rgba(6, 182, 212, 0.4)" }}
               >
-                MATRIX
+                SKILLS
               </span>
             </h2>
             <div className="mt-12 flex items-center gap-5">

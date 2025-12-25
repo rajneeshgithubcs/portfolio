@@ -113,7 +113,7 @@ export default function Experience() {
               Execution_History
             </span>
             <h2 className="text-5xl sm:text-7xl md:text-8xl font-black italic tracking-tighter leading-none uppercase">
-              WORK_<span className="text-cyan-500">LOG</span>
+              PROFESSIONAL_<span className="text-cyan-500">EXPERIENCE</span>
             </h2>
           </motion.div>
 

@@ -224,7 +224,7 @@ export default function Hero() {
             >
               <div className="absolute inset-0 bg-cyan-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <span className="relative z-10 text-cyan-400 group-hover:text-black font-black uppercase tracking-[0.4em] text-[10px]">
-                Initialize_Core
+                EXPLORE_PROJECTS
               </span>
               <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-400" />
               <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-400" />
@@ -234,7 +234,7 @@ export default function Hero() {
               onClick={() => navigate("/resume")}
               className="px-12 py-3.5 border border-white/5 text-white/20 font-black uppercase tracking-[0.4em] text-[10px] hover:text-white hover:border-white/20 transition-all backdrop-blur-sm"
             >
-              Resume_Uplink
+              OPEN_RESUME
             </button>
           </div>
         </div>
