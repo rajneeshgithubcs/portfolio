@@ -79,18 +79,27 @@ export default function About() {
               variants={item}
               className="space-y-6 text-slate-300 text-lg md:text-xl leading-relaxed"
             >
-              <p>
-                I am a developer driven by the challenge of transforming complex
-                logic into seamless digital experiences.
+              <p className="text-xl md:text-2xl text-slate-200 leading-snug">
+                I am a Full-Stack Developer who turns complex technical problems
+                into simple, high-performance digital solutions.
               </p>
-              <p className="text-base md:text-lg text-slate-400 font-light border-l border-cyan-500/30 pl-6">
-                My expertise lies in building{" "}
-                <span className="text-white underline decoration-cyan-500/50 underline-offset-4">
-                  scalable ecosystems
-                </span>{" "}
-                using the MERN stack and Spring Boot. I focus on "Ground-Zero"
-                logic to ensure every component serves a structural purpose.
-              </p>
+
+              {/* Expertise Detail */}
+              <div className="border-l-2 border-cyan-500/50 pl-6 space-y-4">
+                <p className="text-slate-400 text-lg leading-relaxed">
+                  I specialize in building{" "}
+                  <span className="text-white font-semibold italic">
+                    scalable web applications
+                  </span>{" "}
+                  using the <span className="text-white">MERN stack</span> and{" "}
+                  <span className="text-white">Spring Boot</span>.
+                </p>
+                <p className="text-slate-400 text-lg leading-relaxed">
+                  I focus on writing clean, maintainable code to ensure that
+                  every feature I build is fast, secure, and easy to scale as
+                  your business grows.
+                </p>
+              </div>
             </motion.div>
 
             {/* THE TOOLSTACK ANALYSIS */}

@@ -7,7 +7,7 @@ const ResumePage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       // .replace() removes this loading page from the history stack
-      window.location.replace("/newone.pdf");
+      window.location.replace("/new2.pdf");
     }, 500);
 
     return () => clearTimeout(timer);
