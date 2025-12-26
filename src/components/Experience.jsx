@@ -114,7 +114,7 @@ export default function Experience() {
               Professional_Log
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black italic tracking-tight leading-tight uppercase">
-              WORK_<span className="text-cyan-500">EXPERIENCE</span>
+              Professional_<span className="text-cyan-500">EXPERIENCE</span>
             </h2>
           </motion.div>
 
