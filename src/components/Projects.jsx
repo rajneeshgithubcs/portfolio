@@ -59,7 +59,7 @@ export default function Projects() {
           className="mb-32 border-l-2 border-cyan-500/50 pl-8"
         >
           <h2 className="text-4xl md:text-6xl font-black tracking-tight md:tracking-tighter uppercase break-keep whitespace-nowrap md:whitespace-normal">
-            Project_<span className="text-cyan-400">Repository</span>
+            ProjectS<span className="text-cyan-400"></span>
           </h2>
           <p className="mt-4 text-slate-500 text-xs tracking-[0.3em] uppercase leading-relaxed">
             // Accessing_Encrypted_Archives... <br />

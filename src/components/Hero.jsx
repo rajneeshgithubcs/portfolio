@@ -218,6 +218,7 @@ export default function Hero() {
 
           {/* ACTION MODULES */}
           <div className="flex flex-wrap justify-center gap-10">
+            {/* PROJECTS BUTTON (Primary) */}
             <button
               onClick={() => navigate("/projects")}
               className="relative px-12 py-3.5 group overflow-hidden border border-cyan-500/40"
@@ -230,11 +231,22 @@ export default function Hero() {
               <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-400" />
             </button>
 
+            {/* RESUME BUTTON (Highlighted Secondary) */}
             <button
               onClick={() => navigate("/resume")}
-              className="px-12 py-3.5 border border-white/5 text-white/20 font-black uppercase tracking-[0.4em] text-[10px] hover:text-white hover:border-white/20 transition-all backdrop-blur-sm"
+              className="relative px-12 py-3.5 group overflow-hidden border border-white/20 hover:border-white/60 transition-colors duration-300"
             >
-              OPEN_RESUME
+              {/* White/Slate Fill Animation */}
+              <div className="absolute inset-0 bg-slate-100 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+
+              {/* Text */}
+              <span className="relative z-10 text-white group-hover:text-black font-black uppercase tracking-[0.4em] text-[10px] transition-colors duration-300">
+                Open_Resume
+              </span>
+
+              {/* Opposite Corner Accents */}
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/40 group-hover:border-white/0 transition-all" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/40 group-hover:border-white/0 transition-all" />
             </button>
           </div>
         </div>

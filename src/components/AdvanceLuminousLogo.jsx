@@ -74,7 +74,8 @@ export default function AdvancedLuminousLogo({ routeKey }) {
      */
     <Link
       to="/"
-      className="relative z-[999] block cursor-pointer"
+      className="relative z-[999] block cursor-pointer touch-manipulation antialiased"
+      style={{ WebkitTapHighlightColor: "transparent" }} // Removes the grey tap box
       aria-label="Return to Home"
     >
       <motion.div

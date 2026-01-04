@@ -1,177 +1,192 @@
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedinIn, FaTerminal, FaArrowUp } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedinIn,
+  FaTerminal,
+  FaArrowUp,
+  FaCircle,
+} from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 const Footer = () => {
   const [time, setTime] = useState("");
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    setTime(new Date().toLocaleTimeString());
     const timer = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
+      setTime(new Date().toLocaleTimeString("en-GB", { hour12: false }));
     }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-  const navLinks = [
-    { name: "Home", href: "#" },
-    { name: "About", href: "#" },
-    { name: "Projects", href: "#" },
-    { name: "Experience", href: "#" },
-  ];
-
-  // UPDATED SOCIAL DATA WITH YOUR LINKS
-  const socialLinks = [
-    {
-      icon: <FaGithub />,
-      link: "https://github.com/rajneeshgithubcs",
-      label: "GITHUB",
-    },
-    {
-      icon: <FaLinkedinIn />,
-      link: "https://linkedin.com/in/rajneesh-rajak-209882231",
-      label: "LINKEDIN",
-    },
-  ];
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="relative bg-[#020306] text-white font-mono border-t border-white/5 overflow-hidden">
-      {/* CRT SCANLINE OVERLAY */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_2px,3px_100%]" />
+    <footer
+      onMouseMove={handleMouseMove}
+      className="relative bg-[#020306] text-white font-mono border-t border-cyan-900/30 overflow-hidden"
+    >
+      {/* 1. INTERACTIVE MOUSE GLOW */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-20 transition-opacity duration-500"
+        style={{
+          background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(6, 182, 212, 0.15), transparent 80%)`,
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto px-8 py-20 relative z-10">
-        {/* TOP DIAGNOSTICS */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8 border-b border-white/5 pb-12">
-          <div className="flex items-center gap-6">
-            <div className="relative h-12 w-12 border border-white/10 flex items-center justify-center bg-white/5">
-              <span className="text-cyan-500 font-black text-xl italic">R</span>
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-cyan-500 rounded-full animate-ping" />
-            </div>
-            <div>
-              <h3 className="text-xl font-black italic tracking-tighter uppercase">
-                RAJAK.
-                <span className="text-cyan-500 text-sm font-bold ml-1">
-                  ARCHITECT
+      {/* 2. SCANNING MARQUEE */}
+      <div className="w-full border-b border-white/5 bg-cyan-500/[0.02] py-2 overflow-hidden whitespace-nowrap">
+        <motion.div
+          animate={{ x: [0, -1000] }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="flex gap-12 items-center text-[9px] font-black tracking-[0.3em] text-cyan-500/40 uppercase"
+        >
+          {[...Array(8)].map((_, i) => (
+            <span key={i} className="flex items-center gap-3">
+              <FaCircle className="text-[4px] animate-pulse" />
+              Connection_Secure // Node_Active // Protocol_8080 //
+              Trace_Route_Enabled
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-8 pt-16 pb-10 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-16">
+          {/* BRANDING SECTION - REPLACED RAJAK */}
+          <div className="lg:col-span-5">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-14 w-14 border border-cyan-500/30 flex items-center justify-center bg-cyan-500/5 relative group">
+                <span className="text-cyan-500 font-black text-2xl italic font-sans">
+                  R
                 </span>
-              </h3>
-              <span className="text-[9px] text-white/30 uppercase tracking-[0.3em]">
-                System_Terminal_v5.0
-              </span>
+                <div className="absolute inset-0 bg-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <div>
+                {/* NEW NAME: CORE_ENGINE or SYSTECH */}
+                <h3 className="text-2xl font-black tracking-tighter uppercase leading-none font-sans">
+                  CORE_ENGINE.
+                </h3>
+                <span className="text-cyan-500 text-[10px] font-black tracking-[0.4em] mt-1 block">
+                  FULL_STACK_ARCHITECT
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-cyan-500/80">
+                <FaTerminal className="text-[10px]" />
+                <span className="text-[10px] font-black uppercase tracking-widest">
+                  Manifesto
+                </span>
+              </div>
+              <p className="text-sm text-white/40 leading-relaxed max-w-sm border-l-2 border-cyan-500/20 pl-4 italic">
+                "Architecting digital ecosystems where aesthetic precision meets
+                backend resilience. Building the scalable infrastructure of the
+                modern web."
+              </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:flex gap-8 text-[10px] font-bold">
-            <div className="flex flex-col">
-              <span className="text-white/20 uppercase tracking-widest mb-1">
-                Local_Time
-              </span>
-              <span className="text-cyan-500 tracking-tighter min-w-[80px]">
-                {time || "00:00:00"}
-              </span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white/20 uppercase tracking-widest mb-1">
-                Status
-              </span>
-              <span className="text-green-500 tracking-tighter animate-pulse uppercase">
-                Online // Ready
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* MAIN FOOTER CONTENT */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="md:col-span-2 space-y-6">
-            <div className="flex items-center gap-2 text-cyan-500">
-              <FaTerminal className="text-xs" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-white/60">
-                Core_Manifesto
-              </span>
-            </div>
-            <p className="text-sm text-white/40 leading-relaxed max-w-sm italic">
-              "Building high-concurrency systems and pixel-perfect interfaces.
-              Engineering digital infrastructure that defines the modern web."
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">
-              Navigation
+          {/* QUICK LINKS */}
+          <div className="lg:col-span-3">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 mb-6">
+              Directory
             </h4>
-            <ul className="space-y-3">
-              {navLinks.map((item) => (
-                <li key={item.name}>
+            <ul className="space-y-4">
+              {["Home", "About", "Projects", "Experience"].map((link) => (
+                <li key={link}>
                   <a
-                    href={item.href}
-                    className="text-xs text-white/50 hover:text-cyan-400 transition-all flex items-center group gap-2"
+                    href={`#${link.toLowerCase()}`}
+                    className="text-xs text-white/40 hover:text-cyan-400 transition-all flex items-center group gap-3 uppercase"
                   >
-                    <span className="opacity-0 group-hover:opacity-100 text-cyan-500 text-[8px] transition-opacity">
-                      &gt;
-                    </span>
-                    {item.name.toUpperCase()}
+                    <span className="h-[1px] w-0 group-hover:w-4 bg-cyan-500 transition-all duration-300" />
+                    {link}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* SOCIAL TERMINALS - TWITTER REMOVED */}
-          <div className="space-y-6">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">
-              Uplink_Protocols
-            </h4>
+          {/* SYSTEM STATUS */}
+          <div className="lg:col-span-4 space-y-8">
             <div className="flex gap-4">
-              {socialLinks.map((soc, i) => (
-                <motion.a
-                  key={i}
-                  href={soc.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{
-                    y: -5,
-                    boxShadow: "0 0 20px rgba(6, 182, 212, 0.2)",
-                  }}
-                  className="w-12 h-12 border border-white/10 flex items-center justify-center text-white/30 hover:text-cyan-400 hover:border-cyan-400 transition-all bg-white/5 relative group"
-                >
-                  <span className="absolute -top-6 text-[8px] font-bold text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                    {soc.label}
-                  </span>
-                  <div className="text-xl">{soc.icon}</div>
-                </motion.a>
-              ))}
+              <SocialBtn
+                icon={<FaGithub />}
+                link="https://github.com/rajneeshgithubcs"
+                label="GIT"
+              />
+              <SocialBtn
+                icon={<FaLinkedinIn />}
+                link="https://linkedin.com/in/rajneesh-rajak-209882231"
+                label="LKD"
+              />
+            </div>
+
+            <div className="p-4 bg-white/[0.02] border border-white/5 space-y-3">
+              <div className="flex justify-between text-[10px] uppercase">
+                <span className="text-white/20">Local_Time</span>
+                <span className="text-cyan-500 font-bold tracking-widest">
+                  {time || "Syncing..."}
+                </span>
+              </div>
+              <div className="flex justify-between text-[10px] uppercase">
+                <span className="text-white/20">Latency</span>
+                <span className="text-green-500 font-bold">0.4ms</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* BOTTOM EOF LINE */}
-        <div className="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between text-[9px] font-black tracking-widest text-white/10 uppercase italic">
-          <div className="flex items-center gap-4">
-            <span className="text-cyan-500/50 underline decoration-cyan-500/20 underline-offset-4 tracking-normal">
-              EOF // END_OF_TRANSMISSION
+        {/* BOTTOM BAR */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="text-[9px] font-bold tracking-[0.2em] text-white/10 uppercase italic">
+            <span className="text-cyan-500/40 mr-4">
+              EOF // TRANSMISSION_COMPLETE
             </span>
-            <span>© {new Date().getFullYear()}</span>
+            <span>© {new Date().getFullYear()} CORE_ENGINE_SYSTEMS</span>
           </div>
 
-          <button
+          <motion.button
+            whileHover={{
+              scale: 1.05,
+              backgroundColor: "rgba(6, 182, 212, 0.1)",
+            }}
+            whileTap={{ scale: 0.95 }}
             onClick={scrollToTop}
-            className="mt-6 md:mt-0 flex items-center gap-3 group text-white/40 hover:text-cyan-500 transition-colors"
+            className="flex items-center gap-4 border border-cyan-500/30 px-6 py-2 transition-all group"
           >
-            <span className="text-[9px] uppercase tracking-[0.3em]">
-              Return_To_Top
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-500 group-hover:text-white transition-colors">
+              Return_To_Apex
             </span>
-            <div className="p-2 border border-white/10 group-hover:border-cyan-500/50">
-              <FaArrowUp className="text-[10px]" />
-            </div>
-          </button>
+            <FaArrowUp className="text-[10px] text-cyan-500 group-hover:-translate-y-1 transition-transform" />
+          </motion.button>
         </div>
       </div>
     </footer>
   );
 };
+
+const SocialBtn = ({ icon, link, label }) => (
+  <motion.a
+    href={link}
+    target="_blank"
+    rel="noopener noreferrer"
+    whileHover={{ y: -3, borderColor: "rgba(6, 182, 212, 0.5)" }}
+    className="w-14 h-14 border border-white/10 flex flex-col items-center justify-center bg-white/5 group transition-all"
+  >
+    <span className="text-lg text-white/30 group-hover:text-cyan-500 transition-colors">
+      {icon}
+    </span>
+    <span className="text-[7px] mt-1 font-bold text-white/5 group-hover:text-cyan-500/50 uppercase">
+      {label}
+    </span>
+  </motion.a>
+);
 
 export default Footer;
