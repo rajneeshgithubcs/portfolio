@@ -58,9 +58,22 @@ export default function Projects() {
           transition={{ duration: 0.8 }}
           className="mb-32 border-l-2 border-cyan-500/50 pl-8"
         >
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight md:tracking-tighter uppercase break-keep whitespace-nowrap md:whitespace-normal">
+          <h2
+            className="
+  text-3xl 
+  sm:text-4xl 
+  md:text-6xl 
+  font-black 
+  tracking-tight 
+  md:tracking-tighter 
+  uppercase 
+  text-center 
+  leading-tight
+"
+          >
             Project_<span className="text-cyan-400">Repository</span>
           </h2>
+
           <p className="mt-4 text-slate-500 text-[9px] xs:text-[10px] sm:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase leading-loose md:leading-relaxed break-words sm:break-normal">
             <span className="block md:inline">
               // Accessing_Encrypted_Archives...{" "}
