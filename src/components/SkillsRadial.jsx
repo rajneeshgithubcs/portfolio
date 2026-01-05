@@ -30,13 +30,13 @@ export default function SkillsRadial() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // FIXED: Increased mobile radius from 110 to 135 to clear the center circle
   const radius = isMobile ? 135 : 250;
 
   return (
-    <section className="relative bg-[#020306] flex items-center justify-center min-h-[500px] h-screen overflow-hidden font-mono px-4">
-      {/* 1. HUD CORE (Nexus) - Lowered Z-index to 30 so icons pass OVER it on mobile */}
-      <div className="absolute z-30 flex items-center justify-center pointer-events-none">
+    // Changed h-screen to min-h-screen and removed overflow-hidden to prevent layout clipping
+    <section className="relative bg-[#020306] flex items-center justify-center min-h-screen py-20 font-mono px-4">
+      {/* 1. HUD CORE (Nexus) - Base Layer */}
+      <div className="absolute z-10 flex items-center justify-center pointer-events-none">
         <div
           className={`absolute w-32 h-32 md:w-56 md:h-56 rounded-full blur-[60px] transition-colors duration-700 
           ${hoveredSkill ? "bg-cyan-500/25" : "bg-blue-500/5"}`}
@@ -71,8 +71,8 @@ export default function SkillsRadial() {
         </div>
       </div>
 
-      {/* 2. ROTATING FIELD - Set to Z-40 to ensure icons stay on top */}
-      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center z-40">
+      {/* 2. ROTATING FIELD - Interaction Layer */}
+      <div className="relative w-full max-w-[1000px] aspect-square flex items-center justify-center z-20">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
@@ -103,7 +103,7 @@ export default function SkillsRadial() {
             return (
               <div
                 key={i}
-                className="absolute top-1/2 left-1/2"
+                className="absolute top-1/2 left-1/2 z-30"
                 style={{
                   transform: `translate(${x}px, ${y}px) translate(-50%, -50%)`,
                 }}
@@ -120,7 +120,6 @@ export default function SkillsRadial() {
                   onTouchStart={() => setHoveredSkill(skill)}
                   className="relative flex items-center justify-center"
                 >
-                  {/* ICON DIAMOND */}
                   <div
                     className={`w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rotate-45 border transition-all duration-300
                     ${isActive ? "bg-cyan-500 border-white scale-110 shadow-[0_0_20px_#06b6d4]" : "bg-[#0a0c10] border-white/10"}`}
@@ -132,7 +131,6 @@ export default function SkillsRadial() {
                     </div>
                   </div>
 
-                  {/* INFO BOX (TOOLTIP) - Optimized for Mobile visibility */}
                   <AnimatePresence>
                     {isActive && (
                       <motion.div
@@ -140,7 +138,6 @@ export default function SkillsRadial() {
                         animate={{
                           opacity: 1,
                           scale: 1,
-                          // FIXED: On mobile, move box UP (-65) so it doesn't cover the icon or center
                           y: isMobile ? -65 : 0,
                           x: isMobile ? 0 : 45,
                         }}
