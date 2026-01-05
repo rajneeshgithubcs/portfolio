@@ -61,9 +61,13 @@ export default function Projects() {
           <h2 className="text-4xl md:text-6xl font-black tracking-tight md:tracking-tighter uppercase break-keep whitespace-nowrap md:whitespace-normal">
             ProjectS<span className="text-cyan-400"></span>
           </h2>
-          <p className="mt-4 text-slate-500 text-xs tracking-[0.3em] uppercase leading-relaxed">
-            // Accessing_Encrypted_Archives... <br />
-            // Displaying_Selected_Deployment_Units
+          <p className="mt-4 text-slate-500 text-[9px] xs:text-[10px] sm:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase leading-loose md:leading-relaxed break-words sm:break-normal">
+            <span className="block md:inline">
+              // Accessing_Encrypted_Archives...{" "}
+            </span>
+            <span className="block md:inline md:ml-2">
+              // Displaying_Selected_Deployment_Units
+            </span>
           </p>
         </motion.div>
 

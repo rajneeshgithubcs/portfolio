@@ -142,11 +142,17 @@ export default function AdvancedSkills() {
                 SKILLS
               </span>
             </h2>
-            <div className="mt-12 flex items-center gap-5">
-              <span className="h-[1px] w-24 bg-cyan-500" />
-              <p className="text-xs md:text-sm text-cyan-500/60 font-black tracking-[0.6em] uppercase">
+            <div className="mt-8 md:mt-12 flex items-center justify-center md:justify-start gap-3 md:gap-5 w-full overflow-hidden">
+              {/* The line: shorter on mobile, hidden on ultra-small screens */}
+              <span className="hidden xs:block h-[1px] w-12 md:w-24 bg-cyan-500 shrink-0" />
+
+              {/* The text: fluid size and adjusted tracking for small screens */}
+              <p className="text-[10px] sm:text-xs md:text-sm text-cyan-500/60 font-black tracking-[0.3em] md:tracking-[0.6em] uppercase whitespace-nowrap">
                 SYSTEM_CAPABILITY_INDEX_V4
               </p>
+
+              {/* Optional: Add a second line on mobile to center the text visually */}
+              <span className="xs:block md:hidden h-[1px] w-12 bg-cyan-500 shrink-0" />
             </div>
           </div>
 
