@@ -1,8 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Projects from "./components/Projects";
@@ -11,49 +9,56 @@ import Skills from "./components/Skills";
 import SkillsRadial from "./components/SkillsRadial";
 import Services from "./components/Service";
 import Experience from "./components/Experience";
-
-// 1. IMPORT YOUR RESUME PAGE
 import ResumePage from "./pages/ResumePage";
+
+// IMPORT the Scroll Handler (we will create this below)
+import ScrollToRoute from "./components/ScrollToRoute";
 
 function App() {
   return (
     <>
-      {/* GLOBAL NAVBAR */}
       <Navbar />
 
-      {/* ROUTES */}
+      {/* This component will watch your scroll position and update the URL */}
+      <ScrollToRoute />
+
       <Routes>
-        {/* HOME PAGE (SCROLL-BASED LANDING) */}
         <Route
           path="/"
           element={
             <>
-              <Hero />
-              <About />
-              <Projects />
-              <Skills />
-              <SkillsRadial />
-              <Services />
-              <Experience />
+              <section id="home">
+                <Hero />
+              </section>
+              <section id="about">
+                <About />
+              </section>
+              <section id="projects">
+                <Projects />
+              </section>
+              <section id="skills">
+                <Skills />
+                <SkillsRadial />
+              </section>
+              <section id="services">
+                <Services />
+              </section>
+              <section id="experience">
+                <Experience />
+              </section>
             </>
           }
         />
-
         {/* STATIC PAGES */}
         <Route path="/about" element={<About />} />
-        <Route path="/skills" element={<Skills />} />
-
-        {/* PROJECTS */}
         <Route path="/projects" element={<Projects />} />
+        <Route path="/skills" element={<Skills />} />
+        <Route path="/services" element={<Services />} /> {/* ADDED THIS */}
         <Route path="/experience" element={<Experience />} />
-
         <Route path="/projects/:slug" element={<ProjectDetails />} />
-
-        {/* 2. ADD THE RESUME ROUTE */}
         <Route path="/resume" element={<ResumePage />} />
       </Routes>
 
-      {/* GLOBAL FOOTER */}
       <Footer />
     </>
   );

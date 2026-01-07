@@ -8,6 +8,8 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
+// If using React Router, import Link. If not, standard <a> tags are fine.
+// import { Link } from "react-router-dom";
 
 const Footer = () => {
   const [time, setTime] = useState("");
@@ -62,7 +64,6 @@ const Footer = () => {
           {/* THE RR BRANDING SECTION */}
           <div className="lg:col-span-5 space-y-6">
             <div className="flex items-center gap-6">
-              {/* THE "RR" BOX - CUSTOMIZED */}
               <motion.div
                 initial={{ opacity: 0.8 }}
                 animate={{ opacity: [0.7, 1, 0.7] }}
@@ -72,10 +73,8 @@ const Footer = () => {
                 <span className="relative text-cyan-400 font-black text-2xl tracking-tighter italic z-10">
                   RR
                 </span>
-                {/* HUD Corner Accents */}
                 <div className="absolute top-0 right-0 w-2 h-2 bg-cyan-500/40" />
                 <div className="absolute bottom-0 left-0 w-2 h-2 bg-cyan-500/40 opacity-50" />
-                {/* Inner Glow */}
                 <div className="absolute inset-0 bg-cyan-500/5 group-hover:bg-cyan-500/10 transition-colors" />
               </motion.div>
 
@@ -98,16 +97,16 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* DIRECTORY */}
+          {/* DIRECTORY - LIMITED TO 4 LINKS MATCHING YOUR URL STRUCTURE */}
           <div className="lg:col-span-3">
             <h4 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/10 mb-8 border-b border-white/5 pb-2">
               Directory
             </h4>
             <ul className="grid grid-cols-2 lg:grid-cols-1 gap-y-5">
-              {["Home", "System", "Projects", "Kernel"].map((link) => (
+              {["Home", "About", "Projects", "Skills"].map((link) => (
                 <li key={link}>
                   <a
-                    href={`#${link.toLowerCase()}`}
+                    href={link === "Home" ? "/" : `/${link.toLowerCase()}`}
                     className="text-[10px] text-white/40 hover:text-cyan-400 transition-all flex items-center group gap-4 uppercase"
                   >
                     <div className="w-1.5 h-1.5 border border-cyan-500/30 group-hover:bg-cyan-500 transition-all" />
@@ -162,7 +161,9 @@ const Footer = () => {
                     {[1, 2, 3, 4, 5].map((b) => (
                       <div
                         key={b}
-                        className={`w-4 h-1.5 ${b < 4 ? "bg-cyan-500/50" : "bg-white/5"}`}
+                        className={`w-4 h-1.5 ${
+                          b < 4 ? "bg-cyan-500/50" : "bg-white/5"
+                        }`}
                       />
                     ))}
                   </div>
