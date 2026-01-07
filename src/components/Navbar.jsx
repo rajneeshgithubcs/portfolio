@@ -9,6 +9,7 @@ import { useEffect, useState, useRef } from "react";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import AdvancedLuminousLogo from "./AdvanceLuminousLogo.jsx";
 
+// UPDATED: NavLinks to match your required routes
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
@@ -47,13 +48,13 @@ const MagneticLink = ({ children, isActive, index }) => {
       {isActive && (
         <motion.div
           layoutId="nav-pill-bg"
-          className="absolute inset-0 bg-cyan-500/[0.03] border border-cyan-400/20 rounded-xl shadow-[inset_0_0_20px_rgba(34,211,238,0.05)]"
+          className="absolute inset-0 bg-cyan-500/[0.05] border border-cyan-400/30 rounded-xl shadow-[0_0_15px_rgba(34,211,238,0.1)]"
           transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
         >
           <motion.div
             animate={{ left: ["-10%", "110%"] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent"
+            className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-cyan-400/50 to-transparent"
           />
         </motion.div>
       )}
@@ -75,12 +76,12 @@ const MagneticLink = ({ children, isActive, index }) => {
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("/");
 
-  // Update activeSection based on the URL path
+  // Close mobile menu on route change
   useEffect(() => {
-    setActiveSection(location.pathname);
+    setOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -88,16 +89,17 @@ export default function Navbar() {
   }, [open]);
 
   const handleNavClick = (e, path) => {
-    if (location.pathname === "/" || path === "/") {
-      const sectionId = path === "/" ? "home" : path.replace("/", "");
+    // If we are navigating to a section on the same page (Home)
+    if (location.pathname === "/" && path.startsWith("/#")) {
+      const sectionId = path.replace("/#", "");
       const element = document.getElementById(sectionId);
       if (element) {
         e.preventDefault();
         element.scrollIntoView({ behavior: "smooth" });
-        window.history.pushState(null, "", path);
-        setActiveSection(path); // Force update state
-        setOpen(false);
       }
+    } else {
+      // Standard route navigation
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -106,36 +108,29 @@ export default function Navbar() {
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="fixed top-8 left-0 right-0 z-[100] hidden lg:flex justify-center px-6"
+        className="fixed top-8 left-0 right-0 z-[100] hidden lg:flex justify-center px-6 pointer-events-none"
       >
-        <nav className="relative flex items-center p-1.5 rounded-2xl bg-slate-950/40 backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-          <div className="flex items-center gap-6 pl-4 pr-8 py-2">
+        <nav className="relative flex items-center p-1.5 rounded-2xl bg-slate-950/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-auto">
+          {/* LOGO SECTION */}
+          <div className="flex items-center gap-6 pl-4 pr-8 py-2 border-r border-white/5">
             <AdvancedLuminousLogo routeKey={location.pathname} />
             <div className="flex flex-col">
               <span className="text-[11px] font-black text-white tracking-[0.2em] leading-none uppercase">
-                Architect.OS
+                Architect<span className="text-cyan-500">.OS</span>
               </span>
               <div className="flex items-center gap-2 mt-1.5">
                 <div className="w-1 h-1 rounded-full bg-cyan-500 animate-pulse" />
                 <span className="text-[7px] font-mono text-cyan-500/60 uppercase tracking-widest">
-                  Core_Active
+                  System_Active
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="h-10 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent relative">
-            <motion.div
-              animate={{ top: ["0%", "100%", "0%"] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-              className="absolute left-1/2 -translate-x-1/2 w-[2px] h-3 bg-cyan-400"
-            />
-          </div>
-
+          {/* NAV LINKS SECTION */}
           <div className="flex items-center gap-1 px-4">
             {navLinks.map((link, idx) => {
-              // MANUALLY CHECK ACTIVE STATE
-              const isActive = activeSection === link.path;
+              const isActive = location.pathname === link.path;
               return (
                 <NavLink
                   key={link.name}
@@ -150,14 +145,14 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="h-10 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-          <div className="flex items-center gap-8 pl-8 pr-6">
+          {/* VERSION/STATUS SECTION */}
+          <div className="flex items-center gap-8 pl-8 pr-6 border-l border-white/5">
             <div className="flex flex-col items-end">
               <span className="text-[10px] font-black text-white/90 tracking-widest leading-none">
                 V.4.0.5
               </span>
               <span className="text-[6px] font-mono text-cyan-500/40 uppercase mt-1">
-                JBP_Node_01
+                Node_Verified
               </span>
             </div>
           </div>
@@ -179,30 +174,46 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed inset-0 z-[150] bg-slate-950 flex flex-col justify-center px-8"
           >
-            <div className="flex flex-col gap-8 pt-20">
+            <div className="flex flex-col gap-8">
               {navLinks.map((link, idx) => {
-                const isActive = activeSection === link.path;
+                const isActive = location.pathname === link.path;
                 return (
                   <NavLink
                     key={link.name}
                     to={link.path}
-                    onClick={(e) => handleNavClick(e, link.path)}
-                    className={`text-4xl font-black uppercase tracking-tighter ${isActive ? "text-cyan-400 italic" : "text-white/10"}`}
+                    className={`text-4xl font-black uppercase tracking-tighter ${
+                      isActive ? "text-cyan-400 italic" : "text-white/10"
+                    }`}
                   >
-                    <div className="flex items-baseline gap-4">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex items-baseline gap-4"
+                    >
                       <span className="text-xs font-mono italic opacity-40">
                         0{idx + 1}
                       </span>
                       {link.name}
-                    </div>
+                    </motion.div>
                   </NavLink>
                 );
               })}
+            </div>
+
+            {/* MOBILE DECORATION */}
+            <div className="absolute bottom-12 left-8 border-l border-cyan-500/20 pl-4">
+              <p className="text-[10px] text-white/20 font-mono uppercase tracking-[0.2em]">
+                System_Uplink: Established
+                <br />
+                User_ID: Rajneesh_Rajak
+              </p>
             </div>
           </motion.div>
         )}
