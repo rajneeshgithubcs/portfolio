@@ -9,7 +9,6 @@ import { useEffect, useState, useRef } from "react";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import AdvancedLuminousLogo from "./AdvanceLuminousLogo.jsx";
 
-// UPDATED: NavLinks to match your required routes
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
@@ -76,42 +75,26 @@ const MagneticLink = ({ children, isActive, index }) => {
 
 export default function Navbar() {
   const location = useLocation();
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
+    // Prevent scrolling when mobile menu is open
     document.body.style.overflow = open ? "hidden" : "unset";
   }, [open]);
 
-  const handleNavClick = (e, path) => {
-    // If we are navigating to a section on the same page (Home)
-    if (location.pathname === "/" && path.startsWith("/#")) {
-      const sectionId = path.replace("/#", "");
-      const element = document.getElementById(sectionId);
-      if (element) {
-        e.preventDefault();
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      // Standard route navigation
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
   return (
     <>
+      {/* DESKTOP NAVBAR */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="fixed top-8 left-0 right-0 z-[100] hidden lg:flex justify-center px-6 pointer-events-none"
       >
         <nav className="relative flex items-center p-1.5 rounded-2xl bg-slate-950/60 backdrop-blur-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] pointer-events-auto">
-          {/* LOGO SECTION */}
           <div className="flex items-center gap-6 pl-4 pr-8 py-2 border-r border-white/5">
             <AdvancedLuminousLogo routeKey={location.pathname} />
             <div className="flex flex-col">
@@ -127,25 +110,18 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* NAV LINKS SECTION */}
           <div className="flex items-center gap-1 px-4">
-            {navLinks.map((link, idx) => {
-              const isActive = location.pathname === link.path;
-              return (
-                <NavLink
-                  key={link.name}
-                  to={link.path}
-                  onClick={(e) => handleNavClick(e, link.path)}
-                >
+            {navLinks.map((link, idx) => (
+              <NavLink key={link.name} to={link.path}>
+                {({ isActive }) => (
                   <MagneticLink isActive={isActive} index={idx}>
                     {link.name}
                   </MagneticLink>
-                </NavLink>
-              );
-            })}
+                )}
+              </NavLink>
+            ))}
           </div>
 
-          {/* VERSION/STATUS SECTION */}
           <div className="flex items-center gap-8 pl-8 pr-6 border-l border-white/5">
             <div className="flex flex-col items-end">
               <span className="text-[10px] font-black text-white/90 tracking-widest leading-none">
@@ -159,16 +135,18 @@ export default function Navbar() {
         </nav>
       </motion.header>
 
-      {/* MOBILE TRIGGER */}
-      <div className="lg:hidden fixed top-6 left-6 right-6 z-[200] flex items-center justify-between px-6 py-4 rounded-2xl bg-slate-950/80 backdrop-blur-2xl border border-white/10">
-        <AdvancedLuminousLogo routeKey={location.pathname} />
-        <button
-          onClick={() => setOpen(!open)}
-          className="w-11 h-11 flex items-center justify-center bg-cyan-500/5 rounded-xl border border-cyan-500/20 text-cyan-400"
-        >
-          {open ? <HiX size={22} /> : <HiMenuAlt3 size={22} />}
-        </button>
-      </div>
+      {/* MOBILE NAVBAR - UPDATED TO BE FIXED AND STICKY */}
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-[200] p-4 pointer-events-none">
+        <div className="flex items-center justify-between px-6 py-4 rounded-2xl bg-slate-950/80 backdrop-blur-2xl border border-white/10 pointer-events-auto shadow-2xl">
+          <AdvancedLuminousLogo routeKey={location.pathname} />
+          <button
+            onClick={() => setOpen(!open)}
+            className="w-11 h-11 flex items-center justify-center bg-cyan-500/5 rounded-xl border border-cyan-500/20 text-cyan-400"
+          >
+            {open ? <HiX size={22} /> : <HiMenuAlt3 size={22} />}
+          </button>
+        </div>
+      </header>
 
       {/* MOBILE OVERLAY */}
       <AnimatePresence>
@@ -181,33 +159,31 @@ export default function Navbar() {
             className="fixed inset-0 z-[150] bg-slate-950 flex flex-col justify-center px-8"
           >
             <div className="flex flex-col gap-8">
-              {navLinks.map((link, idx) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <NavLink
-                    key={link.name}
-                    to={link.path}
-                    className={`text-4xl font-black uppercase tracking-tighter ${
+              {navLinks.map((link, idx) => (
+                <NavLink
+                  key={link.name}
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `text-4xl font-black uppercase tracking-tighter transition-colors ${
                       isActive ? "text-cyan-400 italic" : "text-white/10"
-                    }`}
+                    }`
+                  }
+                >
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex items-baseline gap-4"
                   >
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      className="flex items-baseline gap-4"
-                    >
-                      <span className="text-xs font-mono italic opacity-40">
-                        0{idx + 1}
-                      </span>
-                      {link.name}
-                    </motion.div>
-                  </NavLink>
-                );
-              })}
+                    <span className="text-xs font-mono italic opacity-40">
+                      0{idx + 1}
+                    </span>
+                    {link.name}
+                  </motion.div>
+                </NavLink>
+              ))}
             </div>
 
-            {/* MOBILE DECORATION */}
             <div className="absolute bottom-12 left-8 border-l border-cyan-500/20 pl-4">
               <p className="text-[10px] text-white/20 font-mono uppercase tracking-[0.2em]">
                 System_Uplink: Established

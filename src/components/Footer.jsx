@@ -8,8 +8,7 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
-// If using React Router, import Link. If not, standard <a> tags are fine.
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // CRITICAL: Use Link for internal routing
 
 const Footer = () => {
   const [time, setTime] = useState("");
@@ -61,21 +60,20 @@ const Footer = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-20 mb-16">
-          {/* THE RR BRANDING SECTION */}
+          {/* BRANDING */}
           <div className="lg:col-span-5 space-y-6">
             <div className="flex items-center gap-6">
               <motion.div
                 initial={{ opacity: 0.8 }}
                 animate={{ opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 4, repeat: Infinity }}
-                className="relative h-14 w-14 border-2 border-cyan-500/30 bg-cyan-500/5 flex items-center justify-center group"
+                className="relative h-14 w-14 border-2 border-cyan-500/30 bg-cyan-500/5 flex items-center justify-center"
               >
                 <span className="relative text-cyan-400 font-black text-2xl tracking-tighter italic z-10">
                   RR
                 </span>
                 <div className="absolute top-0 right-0 w-2 h-2 bg-cyan-500/40" />
                 <div className="absolute bottom-0 left-0 w-2 h-2 bg-cyan-500/40 opacity-50" />
-                <div className="absolute inset-0 bg-cyan-500/5 group-hover:bg-cyan-500/10 transition-colors" />
               </motion.div>
 
               <div>
@@ -97,21 +95,28 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* DIRECTORY - LIMITED TO 4 LINKS MATCHING YOUR URL STRUCTURE */}
+          {/* DIRECTORY - FIXED TO 4 LINKS WITH CORRECT ROUTING */}
           <div className="lg:col-span-3">
             <h4 className="text-[10px] font-black uppercase tracking-[0.6em] text-white/10 mb-8 border-b border-white/5 pb-2">
               Directory
             </h4>
             <ul className="grid grid-cols-2 lg:grid-cols-1 gap-y-5">
-              {["Home", "About", "Projects", "Skills"].map((link) => (
-                <li key={link}>
-                  <a
-                    href={link === "Home" ? "/" : `/${link.toLowerCase()}`}
+              {[
+                { name: "Home", path: "/" },
+                { name: "About", path: "/about" },
+                { name: "Projects", path: "/projects" },
+                { name: "Skills", path: "/skills" },
+              ].map((link) => (
+                <li key={link.name}>
+                  {/* Use Link instead of a tag to prevent 404s */}
+                  <Link
+                    to={link.path}
+                    onClick={() => window.scrollTo(0, 0)}
                     className="text-[10px] text-white/40 hover:text-cyan-400 transition-all flex items-center group gap-4 uppercase"
                   >
                     <div className="w-1.5 h-1.5 border border-cyan-500/30 group-hover:bg-cyan-500 transition-all" />
-                    {link}
-                  </a>
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -175,16 +180,13 @@ const Footer = () => {
 
         {/* BOTTOM AUTH BAR */}
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="flex items-center gap-10 order-2 md:order-1 text-[9px] font-bold tracking-[0.2em] text-white/20 uppercase">
+          <div className="flex items-center gap-10 order-2 md:order-1 text-[9px] font-black tracking-[0.2em] text-white/20 uppercase">
             <span>ID: RAJNEESH_01</span>
             <span>© 2026 ARCHITECT_OS_SYSTEMS</span>
           </div>
 
           <motion.button
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: "rgba(6,182,212,0.05)",
-            }}
+            whileHover={{ scale: 1.05, backgroundColor: "rgba(6,182,212,0.05)" }}
             whileTap={{ scale: 0.95 }}
             onClick={scrollToTop}
             className="w-full md:w-auto flex items-center justify-center gap-10 border border-cyan-500/20 px-8 py-3 group hover:border-cyan-500/60 transition-all order-1 md:order-2"
