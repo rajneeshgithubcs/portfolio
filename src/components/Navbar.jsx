@@ -96,12 +96,12 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "circOut" }}
-        className="fixed top-6 left-0 right-0 z-[100] hidden lg:flex justify-center px-4 pointer-events-none"
+        className="fixed top-0 left-0 right-0 z-[9999] hidden lg:flex justify-center pt-6 pb-4 bg-[#010204] border-b border-white/5 shadow-2xl"
       >
 
         {/* Main Unified Capsule */}
         <div className="pointer-events-auto relative group">
-          <nav className="relative flex items-center bg-[#030712]/80 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+          <nav className="relative flex items-center bg-[#030712] backdrop-blur-3xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
 
             {/* Continuous Glow Border Animation */}
             <div className="absolute inset-0 p-[1px] pointer-events-none z-20 rounded-2xl overflow-hidden">
@@ -162,8 +162,8 @@ export default function Navbar() {
 
 
       {/* --- MOBILE CYBER MENU --- */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-[200] p-4 pointer-events-none">
-        <div className="flex items-center justify-between px-5 py-3 rounded-2xl bg-[#030712]/90 backdrop-blur-xl border border-white/10 pointer-events-auto shadow-2xl">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-[9999] bg-[#010204] pt-4 pb-2 border-b border-white/5 shadow-2xl">
+        <div className="flex items-center justify-between px-5 py-3 rounded-2xl bg-[#030712] backdrop-blur-3xl border border-white/10 pointer-events-auto shadow-2xl">
           <div className="scale-75 origin-left">
             <AdvancedLuminousLogo routeKey={location.pathname} />
           </div>
