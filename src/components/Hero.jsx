@@ -82,6 +82,16 @@ export default function Hero() {
     }, 30);
   }, [scrambling]);
 
+  const [latency, setLatency] = useState(0.083);
+
+  // --- LIVE TELEMETRY ENGINE ---
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLatency(parseFloat((Math.random() * 0.05 + 0.04).toFixed(3)));
+    }, 150);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       onMouseMove={handleMouseMove}
@@ -90,11 +100,11 @@ export default function Hero() {
       {/* 1. ANIMATED ROBOTIC BACKGROUND ENGINE */}
       <motion.div
         style={{ x: bgShiftX, y: bgShiftY }}
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute inset-0 z-0 pointer-events-none will-change-transform"
       >
         {/* Kinetic Hexagonal Grid */}
         <div
-          className="absolute inset-0 opacity-[0.06]"
+          className="absolute inset-0 opacity-[0.06] pointer-events-none"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L93.3 25 L93.3 75 L50 100 L6.7 75 L6.7 25 Z' fill='none' stroke='%2306b6d4' stroke-width='0.5'/%3E%3C/svg%3E")`,
             backgroundSize: "100px 100px",
@@ -108,7 +118,7 @@ export default function Hero() {
             rotate: { duration: 50, repeat: Infinity, ease: "linear" },
             opacity: { duration: 4, repeat: Infinity },
           }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px]"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] will-change-transform"
         >
           <svg
             viewBox="0 0 100 100"
@@ -135,11 +145,11 @@ export default function Hero() {
         <motion.div
           animate={{ top: ["-10%", "110%"] }}
           transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-          className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent shadow-[0_0_20px_rgba(6,182,212,0.3)] z-10"
+          className="absolute left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent shadow-[0_0_20px_rgba(6,182,212,0.3)] z-10 pointer-events-none will-change-[top]"
         />
 
         {/* Deep Field Vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#010204_85%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#010204_85%)] pointer-events-none" />
       </motion.div>
 
       {/* 2. MAIN HUD CONTENT */}
@@ -208,12 +218,13 @@ export default function Hero() {
 
         {/* TELEMETRY DATA */}
         <div className="flex flex-col items-center gap-12">
-          <p className="text-slate-500 text-[10px] md:text-[11px] max-w-md leading-relaxed tracking-[0.3em] uppercase opacity-80">
+          <p className="text-slate-500 text-[10px] md:text-[11px] max-w-sm leading-relaxed tracking-[0.3em] uppercase opacity-80 select-none">
             // SYSTEM_BOOT: <span className="text-cyan-400">SUCCESS</span>{" "}
             <br />
             // ARCHITECTING{" "}
             <span className="text-white">FULL-STACK ECOSYSTEMS</span> <br />
-            // OPTIMIZING_LATENCY_PROTOCOL: 0.083ms
+            // OPTIMIZING_LATENCY_PROTOCOL:{" "}
+            <span className="text-cyan-400">{latency}ms</span>
           </p>
 
           {/* ACTION MODULES */}

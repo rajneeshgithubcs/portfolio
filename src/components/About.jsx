@@ -52,7 +52,7 @@ export default function About() {
 
             <motion.h2
               variants={item}
-              className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85]"
+              className="text-4xl xs:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85]"
             >
               RAJNEESH
               <br />
@@ -68,8 +68,7 @@ export default function About() {
               variants={item}
               className="text-slate-500 text-[10px] md:text-xs uppercase tracking-[0.3em] max-w-xs leading-relaxed"
             >
-              Full-Stack Developer architecting high-performance digital systems
-              and neural-grade interfaces.
+              Full-Stack Developer · MERN Stack · REST APIs · JWT Auth · MongoDB
             </motion.p>
           </div>
 
@@ -80,24 +79,29 @@ export default function About() {
               className="space-y-6 text-slate-300 text-lg md:text-xl leading-relaxed"
             >
               <p className="text-xl md:text-2xl text-slate-200 leading-snug">
-                I am a Full-Stack Developer who turns complex technical problems
-                into simple, high-performance digital solutions.
+                I'm a Full-Stack Developer who builds real, production-grade web
+                applications — from clean APIs to responsive frontends.
               </p>
 
               {/* Expertise Detail */}
               <div className="border-l-2 border-cyan-500/50 pl-6 space-y-4">
                 <p className="text-slate-400 text-lg leading-relaxed">
-                  I specialize in building{" "}
+                  I specialize in the{" "}
                   <span className="text-white font-semibold italic">
-                    scalable web applications
+                    MERN stack
                   </span>{" "}
-                  using the <span className="text-white">MERN stack</span> and{" "}
-                  <span className="text-white">Spring Boot</span>.
+                  — building{" "}
+                  <span className="text-white">RESTful APIs</span> with Node.js
+                  &amp; Express, securing them with{" "}
+                  <span className="text-white">JWT authentication</span>, and
+                  delivering responsive frontends with{" "}
+                  <span className="text-white">React.js &amp; Tailwind CSS</span>.
                 </p>
                 <p className="text-slate-400 text-lg leading-relaxed">
-                  I focus on writing clean, maintainable code to ensure that
-                  every feature I build is fast, secure, and easy to scale as
-                  your business grows.
+                  I care deeply about{" "}
+                  <span className="text-white font-semibold">clean architecture</span>{" "}
+                  — writing modular, maintainable code that scales. Every project
+                  I build is designed to be fast, secure, and easy to grow.
                 </p>
               </div>
             </motion.div>
@@ -109,50 +113,52 @@ export default function About() {
             >
               <div className="space-y-3">
                 <h4 className="text-cyan-500 text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-cyan-500" /> 01_THE_ENGINE
+                  <span className="w-1.5 h-1.5 bg-cyan-500" /> 01_FRONTEND
                 </h4>
                 <p className="text-sm text-slate-500 leading-relaxed">
-                  Crafting type-safe, fluid interfaces using{" "}
-                  <span className="text-white">
-                    React, Next.js, and TypeScript
-                  </span>{" "}
-                  to ensure structural integrity and speed.
+                  Building pixel-perfect, responsive UIs with{" "}
+                  <span className="text-white">React.js</span>,{" "}
+                  <span className="text-white">Tailwind CSS</span>, and{" "}
+                  <span className="text-white">Framer Motion</span>{" "}
+                  — fast, animated, and user-first.
                 </p>
               </div>
 
               <div className="space-y-3">
                 <h4 className="text-cyan-500 text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-cyan-500" /> 02_LOGIC_CORE
+                  <span className="w-1.5 h-1.5 bg-cyan-500" /> 02_BACKEND
                 </h4>
                 <p className="text-sm text-slate-500 leading-relaxed">
-                  Engineering robust backends with{" "}
-                  <span className="text-white">Node.js</span> and
-                  enterprise-grade microservices using{" "}
-                  <span className="text-white">Spring Boot</span>.
+                  Engineering secure, scalable REST APIs using{" "}
+                  <span className="text-white">Node.js</span> &amp;{" "}
+                  <span className="text-white">Express.js</span>, with{" "}
+                  <span className="text-white">JWT</span> auth and role-based
+                  access control baked in.
                 </p>
               </div>
 
               <div className="space-y-3">
                 <h4 className="text-cyan-500 text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-cyan-500" /> 03_DATA_STORAGE
+                  <span className="w-1.5 h-1.5 bg-cyan-500" /> 03_DATABASE
                 </h4>
                 <p className="text-sm text-slate-500 leading-relaxed">
-                  Managing persistence with{" "}
-                  <span className="text-white">MongoDB</span> for flexible
-                  modeling and <span className="text-white">PostgreSQL</span>{" "}
-                  for relational complexity.
+                  Designing and optimizing{" "}
+                  <span className="text-white">MongoDB</span> schemas for
+                  performance — fast queries, clean models, and efficient
+                  handling of concurrent users.
                 </p>
               </div>
 
               <div className="space-y-3">
                 <h4 className="text-cyan-500 text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-cyan-500" /> 04_DESIGN_OPS
+                  <span className="w-1.5 h-1.5 bg-cyan-500" /> 04_TOOLS
                 </h4>
                 <p className="text-sm text-slate-500 leading-relaxed">
-                  Utilizing <span className="text-white">Tailwind CSS</span> for
-                  rapid modular styling and{" "}
-                  <span className="text-white">Framer Motion</span> for
-                  cinematic UX.
+                  Comfortable with{" "}
+                  <span className="text-white">Git &amp; GitHub</span> for version
+                  control,{" "}
+                  <span className="text-white">Postman</span> for API testing, and
+                  following clean, modular coding standards throughout.
                 </p>
               </div>
             </motion.div>

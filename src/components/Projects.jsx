@@ -4,31 +4,31 @@ import { Link } from "react-router-dom";
 const projects = [
   {
     id: "01",
-    slug: "salesman-management-system",
-    title: "Salesman Management System",
-    desc: "Backend-first architecture for distributed workforce synchronization. Features robust RBAC and low-latency mobile integration protocols.",
-    tech: "Node.js // TypeScript // MongoDB // Express",
+    slug: "superprop-360",
+    title: "SuperProp360",
+    desc: "Full-stack property management app simplifying real estate operations for admins and users — property listing, search, filtering, JWT auth, and role-based access control.",
+    tech: "Node.js // Express.js // React.js // MongoDB // JWT // Tailwind CSS",
   },
   {
     id: "02",
+    slug: "ecommerce-bookstore",
+    title: "E-Commerce Bookstore",
+    desc: "Full-stack online bookstore with cart management, order placement, JWT auth, admin/user RBAC, and dummy payment gateway for simulated transactions.",
+    tech: "Node.js // Express.js // React.js // MongoDB // JWT // Tailwind CSS",
+  },
+  {
+    id: "03",
     slug: "nike-inspired-ecommerce",
     title: "Nike-Inspired E-Commerce",
     desc: "Full-stack commerce engine with modular cart lifecycle and secure JWT-based authentication layers.",
     tech: "React // Spring Boot // Redux // MongoDB",
   },
   {
-    id: "03",
+    id: "04",
     slug: "animated-portfolio",
     title: "Animated Portfolio",
     desc: "High-fidelity UI architecture focusing on scroll-driven kinetic animations and reusable component libraries.",
     tech: "React // GSAP // Framer Motion",
-  },
-  {
-    id: "04",
-    slug: "tastyorder",
-    title: "TastyOrder",
-    desc: "Real-time logistics interface for food delivery systems with centralized state synchronization.",
-    tech: "React // Vite // Redux Toolkit",
   },
 ];
 

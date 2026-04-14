@@ -8,35 +8,37 @@ import {
   SiMongodb,
   SiRedux,
   SiSpringboot,
-  SiTypescript,
   SiExpress,
-  SiFlutter,
+  SiPostman,
+  SiGithub,
 } from "react-icons/si";
 import { MdApi, MdSecurity } from "react-icons/md";
 import { GiAbstract053 } from "react-icons/gi";
 
 // ---------------- PROJECT DATA (DO NOT REMOVE THIS) ----------------
 const PROJECTS = {
-  "salesman-management-system": {
-    title: "Salesman Management System",
+  "superprop-360": {
+    title: "SuperProp360",
     id: "UNIT_01",
     description:
-      "A high-availability backend-driven system designed to manage large sales teams with secure role-based access control, optimized REST APIs, and real-time synchronization.",
+      "A full-stack property management web application built with Node.js and React.js, designed to simplify real estate operations for admins and users. Features property listing, search, filtering, secure JWT authentication with role-based access control, and optimized MongoDB queries for smooth concurrent performance.",
     stack: [
       { icon: FaNodeJs, name: "Node.js", color: "text-green-400" },
-      { icon: SiTypescript, name: "TypeScript", color: "text-blue-400" },
       { icon: SiExpress, name: "Express.js", color: "text-white" },
+      { icon: FaReact, name: "React.js", color: "text-cyan-400" },
+      { icon: SiTailwindcss, name: "Tailwind CSS", color: "text-sky-400" },
       { icon: SiMongodb, name: "MongoDB", color: "text-green-500" },
-      { icon: MdApi, name: "REST APIs", color: "text-cyan-400" },
-      { icon: MdSecurity, name: "RBAC", color: "text-emerald-400" },
-      { icon: SiFlutter, name: "Flutter", color: "text-sky-400" },
+      { icon: MdSecurity, name: "JWT Auth", color: "text-emerald-400" },
+      { icon: SiPostman, name: "Postman", color: "text-orange-400" },
+      { icon: SiGithub, name: "GitHub", color: "text-white" },
     ],
     features: [
-      "Type-safe architecture via TypeScript protocols",
-      "Multi-level Role-Based Access Control (RBAC)",
-      "Low-latency REST API throughput",
-      "Flutter-based field agent interface",
-      "Real-time database state synchronization",
+      "Property listing, search & filtering with RESTful APIs",
+      "JWT-based auth with admin & customer role-based access control",
+      "Dynamic property management — add, view & manage listings",
+      "Optimized MongoDB queries for high-concurrency performance",
+      "Responsive React.js + Tailwind CSS frontend seamlessly integrated",
+      "Clean modular backend architecture with proper separation of concerns",
     ],
   },
   "nike-inspired-ecommerce": {
@@ -75,21 +77,28 @@ const PROJECTS = {
       "Adaptive glassmorphism design system",
     ],
   },
-  tastyorder: {
-    title: "TastyOrder – Logistics Interface",
+  "ecommerce-bookstore": {
+    title: "E-Commerce Bookstore",
     id: "UNIT_04",
     description:
-      "A real-time logistics and food delivery interface featuring centralized state management for instantaneous UI feedback.",
+      "A full-stack online bookstore built with Node.js and React.js providing users a smooth book purchasing experience. Features RESTful APIs for user registration, login, book listing, search, filtering, and order management — with JWT authentication, admin/user role-based access, cart management, and a dummy payment gateway.",
     stack: [
-      { icon: FaReact, name: "React", color: "text-cyan-400" },
-      { icon: SiRedux, name: "Redux Toolkit", color: "text-purple-400" },
+      { icon: FaNodeJs, name: "Node.js", color: "text-green-400" },
+      { icon: SiExpress, name: "Express.js", color: "text-white" },
+      { icon: FaReact, name: "React.js", color: "text-cyan-400" },
       { icon: SiTailwindcss, name: "Tailwind CSS", color: "text-sky-400" },
+      { icon: SiMongodb, name: "MongoDB", color: "text-green-500" },
+      { icon: MdSecurity, name: "JWT Auth", color: "text-emerald-400" },
+      { icon: SiPostman, name: "Postman", color: "text-orange-400" },
+      { icon: SiGithub, name: "GitHub", color: "text-white" },
     ],
     features: [
-      "Real-time Redux state synchronization",
-      "Responsive layout for mobile terminal use",
-      "Dynamic inventory filtering logic",
-      "Optimized re-render prevention strategies",
+      "Book listing, search & filtering with RESTful APIs",
+      "JWT auth with admin & user role-based access control",
+      "Cart management — add, remove & update book quantities",
+      "Order placement with dummy payment gateway simulation",
+      "Admin panel to manage books; users can browse & purchase",
+      "Optimized MongoDB queries & modular scalable architecture",
     ],
   },
 };

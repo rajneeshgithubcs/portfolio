@@ -5,23 +5,37 @@ import {
   useTransform,
   useSpring,
   useVelocity,
+  useMotionValue,
+  useAnimationFrame
 } from "framer-motion";
-import { useEffect } from "react";
-// FIX: Using react-router-dom for Vite compatibility
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-const TechDecagon = ({ className, animateProps, strokeWidth = "2" }) => (
-  <svg
-    viewBox="0 0 100 100"
-    className={className}
-    style={{ overflow: "visible" }}
-  >
+// --- GEOMETRY: OCTAGON ---
+// Flat-top Octagon points approximation for 100x100 viewbox
+// 30,5 70,5 95,30 95,70 70,95 30,95 5,70 5,30
+// Using a generic polygon for the "small circle" replacement if needed as a background element
+const TechShape = ({ className, strokeWidth = 2, animateProps }) => (
+  <svg viewBox="0 0 100 100" className={`overflow-visible ${className}`}>
     <motion.polygon
-      points="50,5 76,14 93,36 93,64 76,86 50,95 24,86 7,64 7,36 24,14"
+      points="50,5 95,25 95,75 50,95 5,75 5,25"
       fill="none"
       stroke="currentColor"
       strokeWidth={strokeWidth}
       strokeLinejoin="round"
+      {...animateProps}
+    />
+  </svg>
+);
+const TechOctagon = ({ className, strokeWidth = 2, animateProps, strokeDasharray }) => (
+  <svg viewBox="0 0 100 100" className={`overflow-visible ${className}`}>
+    <motion.polygon
+      points="30,5 70,5 95,30 95,70 70,95 30,95 5,70 5,30"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinejoin="round"
+      strokeDasharray={strokeDasharray}
       {...animateProps}
     />
   </svg>
@@ -31,165 +45,194 @@ export default function AdvancedLuminousLogo({ routeKey }) {
   const controls = useAnimation();
   const { scrollY } = useScroll();
   const velocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(velocity, { damping: 50, stiffness: 300 });
 
-  const smoothVelocity = useSpring(velocity, { damping: 40, stiffness: 450 });
+  // --- PHYSICS ENGINE ---
+  // We want continuous rotation that SPEEDS UP with scroll
+  const baseRotate = useMotionValue(0);
+  const baseRotateOpposite = useMotionValue(0);
 
-  const scrollRotation = useTransform(
-    smoothVelocity,
-    [-4000, 0, 4000],
-    [-1440, 0, 1440]
-  );
+  useAnimationFrame((t, delta) => {
+    // Base speed = 1, Scroll factor adds to it
+    const currentVelocity = smoothVelocity.get();
+    const speedFactor = 1 + Math.abs(currentVelocity / 500); // Scale factor
 
-  const strokeThickness = useTransform(
-    smoothVelocity,
-    [-3000, 0, 3000],
-    [0.1, 0.4, 0.1]
-  );
+    // Direction depends on scroll? Or just speed up? User said "rotate fast".
+    // Let's make it always rotate, but accelerate.
+    const rotationAmount = (delta / 20) * speedFactor; // Base speed
 
-  const squash = useTransform(
-    smoothVelocity,
-    [-3000, 0, 3000],
-    [0.85, 1, 0.85]
-  );
+    baseRotate.set(baseRotate.get() + rotationAmount);
+    baseRotateOpposite.set(baseRotateOpposite.get() - rotationAmount);
+  });
 
+
+  // --- ROUTE ANIMATION ---
   useEffect(() => {
+    // "rotating very slowly make it faster also" -> 0.4s duration for aggressive spin
     controls.start({
-      scale: [1, 2.2, 0.3, 1],
-      rotate: [0, 720],
-      filter: [
-        "hue-rotate(0deg) brightness(1)",
-        "hue-rotate(180deg) brightness(3)",
-        "hue-rotate(360deg) brightness(1)",
-      ],
-      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+      rotate: [0, 360],
+      scale: [1, 1.4, 1], // Extra pop
+      transition: { duration: 0.4, ease: "backInOut" },
     });
   }, [routeKey, controls]);
 
   return (
-    /**
-     * CRITICAL FIXES APPLIED HERE:
-     * 1. to="/": The leading slash makes the path ABSOLUTE, so it always goes to the main home.
-     * 2. z-[999]: High z-index ensures other page elements don't overlap and block the click.
-     * 3. block: Ensures the clickable area spans the full dimensions of the logo.
-     */
     <Link
       to="/"
-      className="relative z-[999] block cursor-pointer touch-manipulation antialiased"
-      style={{ WebkitTapHighlightColor: "transparent" }} // Removes the grey tap box
+      className="relative z-[999] block cursor-pointer group w-16 h-16"
       aria-label="Return to Home"
     >
+      {/* WRAPPER: Handles Route Rotation */}
       <motion.div
         animate={controls}
-        style={{ scaleY: squash }}
-        className="relative w-20 h-20 flex items-center justify-center select-none group"
+        className="relative w-full h-full flex items-center justify-center select-none will-change-transform"
       >
-        {/* 2. ATMOSPHERIC DISTORTION */}
-        <motion.div
-          style={{
-            opacity: useTransform(
-              smoothVelocity,
-              [-2000, 0, 2000],
-              [0.6, 0.1, 0.6]
-            ),
-            scale: useTransform(
-              smoothVelocity,
-              [-2000, 0, 2000],
-              [1.8, 1, 1.8]
-            ),
-            rotate: useTransform(smoothVelocity, [-2000, 2000], [-90, 90]),
-          }}
-          className="absolute inset-[-50%] bg-[radial-gradient(circle,_rgba(34,211,238,0.3)_0%,_transparent_70%)] blur-[40px] -z-10"
-        />
 
-        {/* 3. PERPETUAL KINETIC SHELL */}
+        {/* --- LAYER 1: OUTER OCTAGON (Clockwise) --- */}
         <motion.div
-          style={{ rotate: scrollRotation }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 text-cyan-400/20"
+          style={{ rotate: baseRotate }}
+          className="absolute inset-0 text-cyan-500/80 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]"
         >
-          <TechDecagon
-            className="w-full h-full"
-            strokeWidth={strokeThickness}
-          />
-          <TechDecagon
-            className="absolute inset-0 text-cyan-400"
-            strokeWidth="1.5"
+          <TechOctagon className="w-full h-full" strokeWidth={1.5} />
+          {/* Decorative chaser */}
+          <TechOctagon
+            className="w-full h-full absolute inset-0 text-cyan-200"
+            strokeWidth={2}
+            strokeDasharray="10 90"
             animateProps={{
-              strokeDasharray: ["1 20", "20 80", "1 20"],
-              strokeDashoffset: [0, -400],
-              transition: { duration: 2, repeat: Infinity, ease: "linear" },
+              strokeDashoffset: [0, -100],
+              transition: { duration: 2, repeat: Infinity, ease: "linear" }
             }}
           />
         </motion.div>
 
-        {/* 4. REVERSE COUNTER-WEIGHT */}
+        {/* --- LAYER 2: INNER OCTAGON (Counter-Clockwise) --- */}
         <motion.div
-          style={{ rotate: useTransform(scrollRotation, (v) => v * -1.2) }}
-          animate={{ rotate: -360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-[12%] text-white/5"
+          style={{ rotate: baseRotateOpposite }}
+          className="absolute inset-3 text-white/50 group-hover:text-cyan-300 transition-colors"
         >
-          <TechDecagon className="w-full h-full" strokeWidth="2" />
+          <TechOctagon className="w-full h-full" strokeWidth={1.5} strokeDasharray="4 4" />
         </motion.div>
 
-        {/* 5. THE CORE ENGINE */}
-        <motion.div
-          style={{ rotate: useTransform(scrollRotation, (v) => v * 0.3) }}
-          className="absolute inset-[22%] z-10 bg-slate-900/90 backdrop-blur-2xl border-[0.5px] border-cyan-500/30 overflow-hidden"
-          style={{
-            clipPath:
-              "polygon(50% 5%, 76% 14%, 93% 36%, 93% 64%, 76% 86%, 50% 95%, 24% 86%, 7% 64%, 7% 36%, 24% 14%)",
-          }}
-        >
-          <motion.div
-            animate={{ y: ["-100%", "200%"] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-            className="absolute w-full h-1/2 bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent"
-          />
-          <motion.div
-            animate={{ opacity: [0.2, 0.5, 0.2] }}
-            transition={{ duration: 0.05, repeat: Infinity }}
-            className="absolute inset-0 bg-cyan-400/5"
-          />
-        </motion.div>
+        {/* --- LAYER 3: THE FRAGMENTED CORE (SHATTER-RECONSTRUCT R) --- */}
+        <div className="relative z-10 w-full h-full flex items-center justify-center overflow-visible perspective-[500px]">
 
-        {/* 6. SYSTEM GLYPH */}
-        <div className="relative z-20 pointer-events-none">
-          <svg viewBox="0 0 100 100" className="w-7 h-7 overflow-visible">
-            <motion.path
-              d="M32 20 H58 C72 20 72 45 58 45 H32 V80 M34 45 L68 80"
-              fill="none"
-              stroke="white"
-              strokeWidth="10"
-              strokeLinecap="round"
-              style={{ filter: "drop-shadow(0 0 12px rgba(34,211,238,0.9))" }}
-            />
-            <motion.path
-              d="M32 20 H58 C72 20 72 45 58 45 H32 V80 M34 45 L68 80"
-              fill="none"
-              stroke="cyan"
-              strokeWidth="2"
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ duration: 0.1, repeat: Infinity }}
-            />
-          </svg>
+          {/* Subtle Background Hexagon (Static/Slow) */}
+          <div className="absolute inset-2 text-cyan-500/10 pointer-events-none">
+            <TechShape className="w-full h-full" strokeWidth={0.5} />
+          </div>
+
+          <div className="relative w-[65%] h-[65%] flex items-center justify-center">
+            {/* 
+               HYPER-KINETIC R CORE
+               Consists of multiple layers:
+               1. Digital Echoes (Afterimages)
+               2. Main Energetic Strokes (Flowing Light)
+               3. Glitch Overlays
+            */}
+
+            {/* Layer 1 & 2: Digital Echoes (Slightly offset in time/space) */}
+            {[1, 2].map((i) => (
+              <motion.svg
+                key={`echo-${i}`}
+                viewBox="0 0 100 100"
+                className="absolute inset-0 w-full h-full overflow-visible pointer-events-none opacity-20"
+                animate={{
+                  x: [0, i * 2, -i * 2, 0],
+                  y: [0, -i, i, 0],
+                  rotateY: [0, 10, -10, 0],
+                }}
+                transition={{
+                  duration: 0.15,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                  delay: i * 0.05
+                }}
+              >
+                <path
+                  d="M 35 20 V 80 M 35 20 H 60 C 75 20 75 45 60 45 H 35 M 48 45 L 70 80"
+                  fill="none"
+                  stroke={i === 1 ? "#ec4899" : "#a855f7"} // Pink/Purple echoes
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </motion.svg>
+            ))}
+
+            {/* --- THE BOLD NEON "R" --- */}
+            <motion.svg
+              viewBox="0 0 100 100"
+              className="absolute inset-0 w-full h-full overflow-visible"
+            >
+              <motion.g
+                animate={{
+                  y: [0, -2, 0],
+                  rotateZ: [0, 1, -1, 0],
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                {/* 1. LAYER: SOFT GLOW AURA (Pulsing Depth) */}
+                <motion.path
+                  d="M 35 20 V 80 M 35 20 H 60 C 75 20 75 45 60 45 H 35 M 48 45 L 70 80"
+                  fill="none"
+                  stroke="#22d3ee"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  className="blur-md opacity-20"
+                  animate={{ opacity: [0.1, 0.3, 0.1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+
+                {/* 2. LAYER: SOLID VISIBLE BASE (Always Readable) - INCREASED OPACITY */}
+                <path
+                  d="M 35 20 V 80 M 35 20 H 60 C 75 20 75 45 60 45 H 35 M 48 45 L 70 80"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  className="opacity-100"
+                />
+
+                {/* 3. LAYER: FLUID NEON LIGHT (The Animation) */}
+                <motion.path
+                  d="M 35 20 V 80 M 35 20 H 60 C 75 20 75 45 60 45 H 35 M 48 45 L 70 80"
+                  fill="none"
+                  stroke="#22d3ee"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeDasharray="20 180"
+                  animate={{
+                    strokeDashoffset: [200, 0],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+
+                {/* 4. LAYER: SHARP WHITE HIGHLIGHT (Premium Edge) */}
+                <motion.path
+                  d="M 35 20 V 80 M 35 20 H 60 C 75 20 75 45 60 45 H 35 M 48 45 L 70 80"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeDasharray="5 195"
+                  animate={{
+                    strokeDashoffset: [200, 0],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+              </motion.g>
+            </motion.svg>
+          </div>
+
         </div>
-
-        {/* 7. RADIAL DATA NODES */}
-        {[0, 120, 240].map((angle) => (
-          <motion.div
-            key={angle}
-            style={{ rotate: angle }}
-            className="absolute inset-[-15%] flex justify-center items-start pointer-events-none"
-          >
-            <motion.div
-              animate={{ height: ["0%", "20%", "0%"], opacity: [0, 1, 0] }}
-              transition={{ duration: 2, repeat: Infinity, delay: angle / 100 }}
-              className="w-[1px] bg-gradient-to-b from-cyan-400 to-transparent shadow-[0_0_10px_cyan]"
-            />
-          </motion.div>
-        ))}
       </motion.div>
     </Link>
   );
