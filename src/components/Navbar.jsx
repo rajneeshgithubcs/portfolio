@@ -164,7 +164,7 @@ export default function Navbar() {
       {/* --- MOBILE CYBER MENU --- */}
       <header className="lg:hidden fixed top-0 left-0 right-0 z-[9999] bg-[#010204] pt-4 pb-2 border-b border-white/5 shadow-2xl">
         <div className="flex items-center justify-between px-5 py-3 rounded-2xl bg-[#030712] backdrop-blur-3xl border border-white/10 pointer-events-auto shadow-2xl">
-          <div className="scale-75 origin-left">
+          <div className="scale-90">
             <AdvancedLuminousLogo routeKey={location.pathname} />
           </div>
           <button
