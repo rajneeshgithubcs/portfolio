@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+.skill-card {
+  @apply rounded-2xl p-8
+  bg-white/5 backdrop-blur-xl
+  border border-white/10
+  shadow-[0_0_60px_rgba(0,0,0,0.6)]
+  hover:shadow-[0_0_60px_rgba(34,211,238,0.25)]
+  transition;
+}
+
+.skill-title {
+  @apply text-xl font-semibold mb-6 text-cyan-400;
+}
+
+.skill-grid {
+  @apply grid grid-cols-3 sm:grid-cols-4 gap-6;
+}
