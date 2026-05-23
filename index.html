@@ -5,7 +5,9 @@
   <meta charset="UTF-8" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+  <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="/favicon.ico?v=2" />
 
   <!-- Responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,19 +26,26 @@
   <!-- Author -->
   <meta name="author" content="Rajneesh Rajak" />
 
-  <!-- Open Graph / Social Sharing -->
-  <meta property="og:title" content="Rajneesh Rajak Portfolio" />
-  <meta property="og:description"
-    content="Java Full Stack Developer Portfolio built with React and modern web technologies." />
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0f172a" />
+
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
+  <meta property="og:title" content="Rajneesh Rajak | Java Full Stack Developer" />
+  <meta property="og:description"
+    content="Software Developer from Jabalpur, India specializing in Java, Spring Boot, React.js, Hibernate, and Full Stack Web Development." />
   <meta property="og:url" content="https://rajneeshdev.tech" />
   <meta property="og:image" content="https://rajneeshdev.tech/preview.png" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rajneesh Rajak Portfolio" />
-  <meta name="twitter:description" content="Java Full Stack Developer Portfolio built with React and Spring Boot." />
+  <meta name="twitter:title" content="Rajneesh Rajak | Java Full Stack Developer" />
+  <meta name="twitter:description"
+    content="Software Developer from Jabalpur, India specializing in Java, Spring Boot, React.js, Hibernate, and modern backend technologies." />
   <meta name="twitter:image" content="https://rajneeshdev.tech/preview.png" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://rajneeshdev.tech/" />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -46,6 +55,11 @@
       "name": "Rajneesh Rajak",
       "url": "https://rajneeshdev.tech",
       "jobTitle": "Java Full Stack Developer",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Jabalpur",
+        "addressCountry": "India"
+      },
       "sameAs": [
         "https://github.com/rajneeshgithubcs"
       ]
@@ -56,6 +70,8 @@
 
 <body>
   <div id="root"></div>
+
+  <!-- React Main File -->
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
