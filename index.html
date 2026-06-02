@@ -4,64 +4,81 @@
 <head>
   <meta charset="UTF-8" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <!-- ==================== FAVICON ==================== -->
+  <!-- Standard favicon - PNG (preferred by modern browsers) -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon.png" />
-  <link rel="apple-touch-icon" sizes="96x96" href="/favicon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />
+  <!-- Fallback ICO for older browsers -->
+  <link rel="shortcut icon" href="/favicon-32x32.png" type="image/png" />
+  <!-- Apple Touch Icon (iOS) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <!-- Web App Manifest (PWA + Android) -->
+  <link rel="manifest" href="/site.webmanifest" />
 
-  <!-- Responsive -->
+  <!-- ==================== RESPONSIVE ==================== -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- SEO Title -->
+  <!-- ==================== SEO TITLE ==================== -->
   <title>Rajneesh Rajak | Java Full Stack Developer</title>
 
-  <!-- SEO Description -->
+  <!-- ==================== SEO META ==================== -->
   <meta name="description"
     content="Rajneesh Rajak is a Software Developer from Jabalpur, India, passionate about building scalable web applications using Java, Spring Boot, React.js, Hibernate, MySQL, and modern backend technologies." />
-
-  <!-- SEO Keywords -->
   <meta name="keywords"
-    content="Rajneesh Rajak, Java Developer, Full Stack Developer, Spring Boot Developer, React Developer, Hibernate Developer, Backend Developer" />
-
-  <!-- Author -->
+    content="Rajneesh Rajak, Java Developer, Full Stack Developer, Spring Boot Developer, React Developer, Hibernate Developer, Backend Developer, Jabalpur Developer" />
   <meta name="author" content="Rajneesh Rajak" />
-
-  <!-- Theme Color -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="theme-color" content="#0f172a" />
+  <meta name="color-scheme" content="dark" />
 
-  <!-- Open Graph / Facebook -->
+  <!-- ==================== CANONICAL URL ==================== -->
+  <link rel="canonical" href="https://rajneeshdev.tech/" />
+
+  <!-- ==================== OPEN GRAPH / FACEBOOK ==================== -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rajneesh Rajak Portfolio" />
   <meta property="og:title" content="Rajneesh Rajak | Java Full Stack Developer" />
   <meta property="og:description"
     content="Software Developer from Jabalpur, India specializing in Java, Spring Boot, React.js, Hibernate, and Full Stack Web Development." />
   <meta property="og:url" content="https://rajneeshdev.tech" />
   <meta property="og:image" content="https://rajneeshdev.tech/preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_IN" />
 
-  <!-- Twitter -->
+  <!-- ==================== TWITTER CARD ==================== -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Rajneesh Rajak | Java Full Stack Developer" />
   <meta name="twitter:description"
     content="Software Developer from Jabalpur, India specializing in Java, Spring Boot, React.js, Hibernate, and modern backend technologies." />
   <meta name="twitter:image" content="https://rajneeshdev.tech/preview.png" />
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://rajneeshdev.tech/" />
-
-  <!-- Structured Data -->
+  <!-- ==================== STRUCTURED DATA (JSON-LD) ==================== -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Rajneesh Rajak",
       "url": "https://rajneeshdev.tech",
+      "image": "https://rajneeshdev.tech/favicon-512x512.png",
       "jobTitle": "Java Full Stack Developer",
+      "description": "Software Developer from Jabalpur, India specializing in Java, Spring Boot, React.js, and Full Stack Web Development.",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Jabalpur",
-        "addressCountry": "India"
+        "addressRegion": "Madhya Pradesh",
+        "addressCountry": "IN"
       },
       "sameAs": [
-        "https://github.com/rajneeshgithubcs"
+        "https://github.com/rajneeshgithubcs",
+        "https://www.linkedin.com/in/rajneesh-rajak"
+      ],
+      "knowsAbout": [
+        "Java", "Spring Boot", "React.js", "Hibernate", "MySQL", "Full Stack Development"
       ]
     }
   </script>
